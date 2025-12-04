@@ -1,12 +1,5 @@
-'use client'
-
-import { useEffect } from "react";
-
 export default function HomePage() {
 
-  useEffect(()=>{
-    window.alert("ciao");
-  },[])
 
   console.log('[HomePag] rendering');
   return(
