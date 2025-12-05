@@ -1,7 +1,9 @@
+import Heading from "../../../components/Heading";
+
 export default function StardewValleyPage() {
   return(
     <>
-      <h1>Stardew valley</h1>
+      <Heading>Stardew valley</Heading>
       <p>
        valley page
       </p>

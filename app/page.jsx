@@ -1,10 +1,10 @@
+import Heading from "../components/Heading";
+
 export default function HomePage() {
-
-
   console.log('[HomePag] rendering');
   return(
     <>
-      <h1>indie gamer</h1>
+      <Heading>Indie Gamer</Heading>
       <p>
         only the best indie games, reviewed for you
       </p>

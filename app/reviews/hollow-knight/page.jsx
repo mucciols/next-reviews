@@ -1,9 +1,11 @@
+import Heading from "../../../components/Heading";
+
 export default function HollowKnightPage() {
   return(
     <>
-      <h1>Hollow knight</h1>
+      <Heading>Hollow knight</Heading>
       <p>
-       knight
+        knight
       </p>
     </>
   )
