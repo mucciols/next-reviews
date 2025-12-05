@@ -15,7 +15,6 @@ export default function ReviewsPage() {
               height="360"
             />
             <h2 className="py-1 text-center">Hollow knight</h2>
-            
           </Link>
         </li>
         <li className="bg-white rounded border border-gray-300 shadow w-80 hover:shadow-xl">
