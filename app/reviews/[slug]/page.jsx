@@ -1,10 +1,9 @@
 import Heading from "@/components/Heading";
 import { getReview } from "@/lib/reviews";
 
-export default async function StardewValleyPage() {
-  
-  const review = await getReview('stardew-valley');
-
+export default async function ReviewPage({ params } ) {
+  const { slug } = await params;
+  const review = await getReview(slug);
   return (
     <>
       <Heading>{review.title}</Heading>
@@ -15,7 +14,6 @@ export default async function StardewValleyPage() {
       />
       <article dangerouslySetInnerHTML={{ __html: review.body}} 
         className="max-w-screen-sm prose prose-slate">
-
       </article>
     </>
   );
