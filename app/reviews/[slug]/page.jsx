@@ -6,6 +6,14 @@ export async function generateStaticParams() {
   return slugs.map((slug)=> ({ slug }));
 }
 
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const review = await getReview(slug);
+  return {
+    title: review.title
+  };
+}
+
 export default async function ReviewPage({ params } ) {
   const { slug } = await params;
   const review = await getReview(slug);
