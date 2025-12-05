@@ -2,11 +2,13 @@ import Link from "next/link";
 import Heading from "@/components/Heading";
 import { getFeaturedReview } from "@/lib/reviews";
 
-export default function HomePage() {
-  
-  const review = getFeaturedReview();
-  
-  console.log('[HomePag] rendering');
+export const metadata = { 
+  title: "Indie Gamer",
+  description : "only the best indie games, reviewed for you"
+ }
+
+export default async function HomePage() {
+  const review = await getFeaturedReview();
   return(
     <>
       <Heading>Indie Gamer</Heading>
@@ -17,7 +19,7 @@ export default function HomePage() {
           <Link href={`reviews/${review.slug}`} 
             className="flex flex-col sm:flex-row">
             <img
-              src={`/images/${review.image}`}
+              src={`${review.image}`}
               className="mb-1 rounded-t sm:rounded-l sm:rounded-r-none"
               width="640 px"
               height="360"
