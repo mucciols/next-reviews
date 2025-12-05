@@ -8,7 +8,7 @@ export default function StardewValleyPage() {
         width="640 px" height="360" 
       />
       <p>
-       valley page
+       this will be the review for Stardew Valley
       </p>
     </>
   )

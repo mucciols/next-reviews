@@ -20,7 +20,7 @@ export default function ReviewsPage() {
           </Link>
         </li>
         <li className="bg-white rounded border border-gray-300 shadow w-80 hover:shadow-xl">
-          <Link href="reviews/hollow-knight">
+          <Link href="reviews/stardew-valley">
             <img
               src="/images/stardew-valley.jpg"
               className="mb-1 rounded-t"
