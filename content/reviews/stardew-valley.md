@@ -1,7 +1,7 @@
 # Heading
 ## Sub-heading
 
-Rich text with __bold__ and_italic_.
+Rich text with __bold__ and _italic_.
 
 Another paragraph.
 
