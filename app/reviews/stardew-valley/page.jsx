@@ -13,7 +13,8 @@ export default async function StardewValleyPage() {
         src="/images/stardew-valley.jpg" className="mb-2 rounded"
         width="640 px" height="360"
       />
-      <article dangerouslySetInnerHTML={{ __html: html}} className="prose">
+      <article dangerouslySetInnerHTML={{ __html: html}} 
+        className="max-w-screen-sm prose prose-slate">
 
       </article>
     </>
