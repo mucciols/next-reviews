@@ -1,11 +1,14 @@
 import { readFile } from 'node:fs/promises'
+import matter from 'gray-matter'
 import { marked } from 'marked'
 import Heading from "@/components/Heading";
 
 export default async function StardewValleyPage() {
   const text = await readFile('./content/reviews/stardew-valley.md', 'utf8');
-  const html = marked(text);
+  const { content , data } = matter(text);
+  const html = marked(content);
 
+  console.log('Fron matter:', data);
   return (
     <>
       <Heading>Stardew valley</Heading>
