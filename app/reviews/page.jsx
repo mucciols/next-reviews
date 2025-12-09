@@ -6,7 +6,6 @@ export const metadata = {
   title: "Reviews",
 }
 
-
 export default async function ReviewsPage() {
   const reviews = await getReviews();
   console.log('[ReviewsPage]', reviews)
@@ -15,14 +14,13 @@ export default async function ReviewsPage() {
       <Heading>Reviews</Heading>
       <ul className="flex flex-row flex-wrap gap-3">
         {reviews.map((review) => (
-          
           <li
             key={review.slug}
             className="bg-white rounded border border-gray-300 shadow w-80 hover:shadow-xl"
           >
             <Link href={`reviews/${review.slug}`}>
               <img
-                src={`http://localhost:1337${review.image[0].url}` }
+                src={`${review.image}` }
                 className="mb-1 rounded-t"
                 width="640 px"
                 height="360"
