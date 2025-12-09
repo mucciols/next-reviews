@@ -1,0 +1,4 @@
+start strapi:
+  1) entra nella cartella di del cms e digita
+     npm run develop
+  
