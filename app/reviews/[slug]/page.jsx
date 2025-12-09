@@ -2,6 +2,8 @@ import Heading from "@/components/Heading";
 import ShareButtons from "@/components/ShareButtons";
 import { getReview, getSlugs } from "@/lib/reviews";
 
+//export const dynamic = 'auto';
+
 export async function generateStaticParams() {
   const slugs = await getSlugs();
   // console.log('[ReviewPage] generateStaticParams', slugs);
