@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Heading from "@/components/Heading";
 import ShareButtons from "@/components/ShareButtons";
 import { getReview, getSlugs } from "@/lib/reviews";
