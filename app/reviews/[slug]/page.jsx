@@ -2,10 +2,10 @@ import Heading from "@/components/Heading";
 import ShareButtons from "@/components/ShareButtons";
 import { getReview, getSlugs } from "@/lib/reviews";
 
-export async function generateStaticParams() {
-  const slugs = await getSlugs();
-  return slugs.map((slug) => ({ slug }));
-}
+// export async function generateStaticParams() {
+//   const slugs = await getSlugs();
+//   return slugs.map((slug) => ({ slug }));
+// }
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -17,7 +17,9 @@ export async function generateMetadata({ params }) {
 
 export default async function ReviewPage({ params }) {
   const { slug } = await params;
+
   const review = await getReview(slug);
+
   return (
     <>
       <Heading>{review.title}</Heading>

@@ -1,12 +1,13 @@
-import { log } from "node:console";
-import { writeFileSync } from "node:fs"
+
 import qs from 'qs'
 
-const url = "http://localhost:1337/api/reviews" + "?" + qs.stringify({
+const url = "http://localhost:1337/api/reviews/" 
+   +  "?" + qs.stringify({
+  //filters: { id: { $eq: 9 } },
+  filters: { slug: { $eq: 'Stardew-Valley' } },
   fields:['slug', 'title', 'subtitle', 'publishedAt'],
   populate: { image:{ fields:['url'] } },
-  sort:['publishedAt:desc'],
-  //pagination: { pageSize: 1 }
+  pagination: { pageSize: 1, withCount: false }
 }, { encodeValuesOnly: true })
 console.log(url);
 const response = await fetch(url);
