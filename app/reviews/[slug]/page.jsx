@@ -1,8 +1,7 @@
+import { notFound } from "next/navigation";
 import Heading from "@/components/Heading";
 import ShareButtons from "@/components/ShareButtons";
 import { getReview, getSlugs } from "@/lib/reviews";
-
-//export const dynamic = 'auto';
 
 export async function generateStaticParams() {
   const slugs = await getSlugs();
@@ -13,6 +12,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const review = await getReview(slug);
+  if (!review) {
+    notFound();
+  }
   return {
     title: review.title,
   };
@@ -21,21 +23,25 @@ export async function generateMetadata({ params }) {
 export default async function ReviewPage({ params }) {
   const { slug } = await params;
   const review = await getReview(slug);
-  console.log('[ReviewPage] rendering: ', slug);
+  if (!review) {
+    console.log('non trovato')
+    notFound();
+  }
+  //console.log('[ReviewPage] rendering: ', slug);
   return (
     <>
       <Heading>{review.title}</Heading>
-      <p className='font-semibold pb-3'>
-        {review.subtitle}
-      </p>
+      <p className="font-semibold pb-3">{review.subtitle}</p>
       <div className="flex gap-3 items-baseline">
         <p className="italic pb-2">{review.date}</p>
         <ShareButtons />
       </div>
-      <img src={review.image} 
-         alt={`${review.slug}`}
+      <img
+        src={review.image}
+        alt={`${review.slug}`}
         className="mb-2 rounded"
-        width="640"  height="360"
+        width="640"
+        height="360"
       />
       <article
         dangerouslySetInnerHTML={{ __html: review.body }}
