@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import Link from "next/link";
 import Heading from "@/components/Heading";
 import { getReviews } from "@/lib/reviews";
@@ -20,9 +21,10 @@ export default async function ReviewsPage() {
           >
             <Link href={`reviews/${review.slug}`}>
               <img
+                alt={`${review.slug}`}
                 src={`${review.image}` }
                 className="mb-1 rounded-t"
-                width="640 px"
+                width="640"
                 height="360"
               />
               <h2 className="font-semibold font-orbitron py-1 text-center">
