@@ -25,9 +25,14 @@ export default async function HomePage() {
                   width="640 px"
                   height="360"
                 />
-                <h2 className="font-semibold font-orbitron py-1 text-center sm:px-2">
-                  {review.title}
-                </h2>
+                <div className="px-2 py-1 text-center sm:text-left">
+                  <h2 className="font-semibold font-orbitron">
+                    {review.title}
+                  </h2>
+                  <p className="hidden pt-2 sm:block">
+                    {review.subtitle}
+                  </p>
+                </div>
               </Link>
             </div>
           </li>
