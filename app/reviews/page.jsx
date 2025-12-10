@@ -15,8 +15,13 @@ export default async function ReviewsPage({ searchParams }) {
   // asincrona perché sono delle promise
   const params = await searchParams;
   const page = parsePageParam(params.page);
-
   const { reviews, pageCount } = await getReviews(PAGE_SIZE, page);
+
+  console.log('[ReviewsPage] rendering: ', page);
+  console.log('[ReviewsPage] reviews: ', reviews.map(({slug, title})=>({
+    slug, title
+  })));
+  
 
   return (
     <>

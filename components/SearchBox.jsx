@@ -1,18 +1,39 @@
-'use client';
+"use client";
 
 import { useIsClient } from "@/lib/hooks";
-import { Combobox } from "@headlessui/react";
+import { Combobox, ComboboxOption } from "@headlessui/react";
+
+const reviews = [
+  { slug: "hades-2018", title: "Hades" },
+  { slug: "fall-guys", title: "Fall Guys: Ultimate Knockout" },
+  { slug: "black-mesa", title: "Black Mesa" },
+  { slug: "disco-elysium", title: "Disco Elysium" },
+  { slug: "dead-cells", title: "Dead Cells" },
+  { slug: "a-way-out-2018", title: "A Way Out" },
+];
 
 export default function SearchBox() {
   const isClient = useIsClient();
 
-  console.log('[SearchBox] isClient:' , isClient);  
-  if(!isClient) {
+  // console.log('[SearchBox] isClient:' , isClient);
+  if (!isClient) {
     return null;
   }
   return (
-    <Combobox >
-      <Combobox.Input placeholder="Search..." />
-    </Combobox>
+    <div className="relative w-48">
+      <Combobox>
+        <Combobox.Input placeholder="Search..." className="border px-2 rounded w-full" />
+        <Combobox.Options className="absolute bg-white py-1">
+          {reviews.map((review) => (
+            <Combobox.Option key={review.slug}>
+              {({active})=>(
+                  <span className={`block px-2 truncate w-full ${active ? '' : ''}`}>{review.title}</span>
+              )}
+              
+            </Combobox.Option>
+          ))}
+        </Combobox.Options>
+      </Combobox>
+    </div>
   );
 }
