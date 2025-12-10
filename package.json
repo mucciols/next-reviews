@@ -15,7 +15,8 @@
     "qs": "^6.14.0",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
-    "server-only": "^0.0.1"
+    "server-only": "^0.0.1",
+    "use-debounce": "^10.0.6"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.17",
