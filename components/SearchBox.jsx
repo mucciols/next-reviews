@@ -1,12 +1,17 @@
 'use client';
+
+import { useIsClient } from "@/lib/hooks";
 import { Combobox } from "@headlessui/react";
-import { useState } from "react";
 
 export default function SearchBox() {
-  const [query, setQuery] = useState("");
+  const isClient = useIsClient();
 
+  console.log('[SearchBox] isClient:' , isClient);  
+  if(!isClient) {
+    return null;
+  }
   return (
-    <Combobox value={query} onChange={setQuery}>
+    <Combobox >
       <Combobox.Input placeholder="Search..." />
     </Combobox>
   );

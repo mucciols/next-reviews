@@ -5,8 +5,6 @@ import { usePathname } from "next/navigation";
 
 export default function NavLink({ children, href, prefetch }) {
   const pathname = usePathname();
-  console.log("[pathname] ", pathname);
-
   if (pathname === href) 
   {
     return (
