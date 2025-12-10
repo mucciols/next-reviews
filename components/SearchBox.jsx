@@ -1,9 +1,10 @@
 "use client";
 
 import { useIsClient } from "@/lib/hooks";
+import { searchReviews } from "@/lib/reviews";
 import { Combobox } from "@headlessui/react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // const reviews = [
 //   { slug: "Hellblade", title: "Hellblade" },
@@ -15,34 +16,42 @@ import { useState } from "react";
 //   { slug: "a-way-out-2018", title: "A Way Out" },
 // ];
 
-export default function SearchBox({ reviews }) {
-  const router = useRouter(); 
+export default function SearchBox() {
+  const router = useRouter();
   const isClient = useIsClient();
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
+  const [reviews, setReviews] = useState([]);
+
+  useEffect(() => {
+    if (query.length > 0) {
+      (async () => {
+        const revs = await searchReviews(query);
+        setReviews(revs);
+      })();
+    } else {
+      setReviews([]);
+    }
+  }, [query]);
 
   if (!isClient) {
     return null;
   }
 
   const handleChange = (review) => {
-    router.push(`/reviews/${review.slug}`)
+    router.push(`/reviews/${review.slug}`);
   };
-
-  const filtered = reviews.filter((review) => 
-      review.title.toLowerCase()
-                  .includes(query.toLowerCase()))
-                  .slice(0, 5);
 
   return (
     <div className="relative w-48">
       <Combobox onChange={handleChange}>
         <Combobox.Input
-          value={query} onChange={ (event) => setQuery(event.target.value) }
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
           placeholder="Search..."
           className="border px-2 py-1 rounded w-full"
         />
         <Combobox.Options className="absolute bg-white py-1 w-full">
-          {filtered.map((review) => (
+          {reviews.map((review) => (
             <Combobox.Option key={review.slug} value={review}>
               {({ active }) => (
                 <span

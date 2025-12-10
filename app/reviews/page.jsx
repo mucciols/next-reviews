@@ -17,17 +17,13 @@ export default async function ReviewsPage({ searchParams }) {
   
   const page = parsePageParam(params.page);
   const { reviews, pageCount } = await getReviews(PAGE_SIZE, page);
-  const searchableReviews = await getSearchableReviews();
-
-  
-  
 
   return (
     <>
       <Heading>Reviews</Heading>
       <div className="flex justify-between pb-3">
         <PaginationBar href="reviews" page={page} pageCount={pageCount} />
-        <SearchBox reviews={searchableReviews} />
+        <SearchBox  />
       </div>
       <ul className="flex flex-row flex-wrap gap-3">
         {reviews.map((review) => (
