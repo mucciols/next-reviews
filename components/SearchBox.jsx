@@ -1,7 +1,6 @@
 "use client";
 
 import { useIsClient } from "@/lib/hooks";
-import { searchReviews } from "@/lib/reviews";
 import { Combobox } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,7 +14,9 @@ export default function SearchBox() {
   useEffect(() => {
     if (query.length > 0) {
       (async () => {
-        const revs = await searchReviews(query);
+        //const revs = await searchReviews(query);
+        const response = await fetch('api/search?query=' + encodeURIComponent(query))
+        const revs = await response.json()
         setReviews(revs);
       })();
     } else {
