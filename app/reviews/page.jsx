@@ -15,10 +15,6 @@ export default async function ReviewsPage({ searchParams }) {
   const page = parsePageParam(params.page);
 
   const { reviews, pageCount }  = await getReviews(PAGE_SIZE, page);
-  // console.log('rev 1', rev)
-  // const reviews = rev.reviews;
-  // console.log('rev 2', reviews)
-  
   
   return (
     <>
@@ -26,7 +22,9 @@ export default async function ReviewsPage({ searchParams }) {
       <div>
         <Link href={`/reviews?page=${Number(page) - 1}`}> - </Link>
         <span> (Page {page}) of {pageCount} </span>
-        <Link href={`/reviews?page=${Number(page) + 1}`}> + </Link>
+        {
+          page < pageCount ? <Link href={`/reviews?page=${Number(page) + 1}`}> + </Link> : null
+        }
       </div>
       <ul className="flex flex-row flex-wrap gap-3">
         {reviews.map((review) => (
