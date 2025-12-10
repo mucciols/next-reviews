@@ -22,14 +22,23 @@ export default function SearchBox() {
   return (
     <div className="relative w-48">
       <Combobox>
-        <Combobox.Input placeholder="Search..." className="border px-2 rounded w-full" />
-        <Combobox.Options className="absolute bg-white py-1">
+        <Combobox.Input
+          placeholder="Search..."
+          className="border px-2 py-1 rounded w-full"
+        />
+
+        <Combobox.Options className="absolute bg-white py-1 w-full">
           {reviews.map((review) => (
-            <Combobox.Option key={review.slug}>
-              {({active})=>(
-                  <span className={`block px-2 truncate w-full ${active ? '' : ''}`}>{review.title}</span>
+            <Combobox.Option key={review.slug} value={review.slug}>
+              {({ active }) => (
+                <span
+                  className={`block px-2 truncate w-full ${
+                    active ? "bg-orange-100" : ""
+                  }`}
+                >
+                  {review.title}
+                </span>
               )}
-              
             </Combobox.Option>
           ))}
         </Combobox.Options>
