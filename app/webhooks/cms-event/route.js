@@ -7,6 +7,6 @@ export async function POST(request) {
   if(payload.model === 'review') {
     revalidateTag(CACHE_TAGS_REVIEW);
   }
-  console.log('payload:', payload);
+  //console.log('payload:', payload);
   return new Response(null, { status: 204 });
 }

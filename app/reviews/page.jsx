@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import Link from "next/link";
 import Heading from "@/components/Heading";
 import { getReviews } from "@/lib/reviews";
@@ -7,11 +6,23 @@ export const metadata = {
   title: "Reviews",
 }
 
-export default async function ReviewsPage() {
+export default async function ReviewsPage({ searchParams }) {
+
+  //recupero i search params in maniera asincrona 
+  // perché sono delle promise
+  const params = await searchParams;
+  //const page = params?.page ?? "1";
+  const page = parsePageParam(params.page) ;
+
   const reviews = await getReviews(6);
   return (
     <>
       <Heading>Reviews</Heading>
+      <div>
+        <Link href={`/reviews?page=${Number(page) - 1 }`}> - </Link>
+        <span> (Page {page}) </span>
+        <Link href={`/reviews?page=${Number(page) + 1 }`}> + </Link>
+      </div>
       <ul className="flex flex-row flex-wrap gap-3">
         {reviews.map((review) => (
           <li
@@ -35,4 +46,14 @@ export default async function ReviewsPage() {
       </ul>
     </>
   );
+}
+
+function parsePageParam(paramValue) {
+  if(paramValue) {
+    const page = parseInt(paramValue);
+    if(isFinite(page) && page > 0) {
+      return page;
+    }
+  }
+  return 1;
 }
