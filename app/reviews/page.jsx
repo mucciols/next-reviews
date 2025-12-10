@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Heading from "@/components/Heading";
-import { getReviews } from "@/lib/reviews";
+import { getReviews, getSearchableReviews } from "@/lib/reviews";
 import PaginationBar from "@/components/PaginationBar";
 import SearchBox from "@/components/SearchBox";
 
@@ -14,13 +14,12 @@ export default async function ReviewsPage({ searchParams }) {
   // recupero i search params in maniera
   // asincrona perché sono delle promise
   const params = await searchParams;
+  
   const page = parsePageParam(params.page);
   const { reviews, pageCount } = await getReviews(PAGE_SIZE, page);
+  const searchableReviews = await getSearchableReviews();
 
-  console.log('[ReviewsPage] rendering: ', page);
-  console.log('[ReviewsPage] reviews: ', reviews.map(({slug, title})=>({
-    slug, title
-  })));
+  
   
 
   return (
@@ -28,7 +27,7 @@ export default async function ReviewsPage({ searchParams }) {
       <Heading>Reviews</Heading>
       <div className="flex justify-between pb-3">
         <PaginationBar href="reviews" page={page} pageCount={pageCount} />
-        <SearchBox />
+        <SearchBox reviews={searchableReviews} />
       </div>
       <ul className="flex flex-row flex-wrap gap-3">
         {reviews.map((review) => (
