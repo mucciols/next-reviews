@@ -8,13 +8,12 @@ export const metadata = {
 
 export default async function ReviewsPage({ searchParams }) {
 
-  //recupero i search params in maniera asincrona 
-  // perché sono delle promise
+  // recupero i search params in maniera  
+  // asincrona perché sono delle promise
   const params = await searchParams;
-  //const page = params?.page ?? "1";
   const page = parsePageParam(params.page) ;
 
-  const reviews = await getReviews(6);
+  const reviews = await getReviews(1,page);
   return (
     <>
       <Heading>Reviews</Heading>
