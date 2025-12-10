@@ -2,25 +2,26 @@ import Link from "next/link";
 import Heading from "@/components/Heading";
 import { getReviews } from "@/lib/reviews";
 
-export const metadata = { 
+export const metadata = {
   title: "Reviews",
-}
+};
+
+const PAGE_SIZE = 1;
 
 export default async function ReviewsPage({ searchParams }) {
-
-  // recupero i search params in maniera  
+  // recupero i search params in maniera
   // asincrona perché sono delle promise
   const params = await searchParams;
-  const page = parsePageParam(params.page) ;
+  const page = parsePageParam(params.page);
 
-  const reviews = await getReviews(1,page);
+  const reviews = await getReviews(PAGE_SIZE, page);
   return (
     <>
       <Heading>Reviews</Heading>
       <div>
-        <Link href={`/reviews?page=${Number(page) - 1 }`}> - </Link>
+        <Link href={`/reviews?page=${Number(page) - 1}`}> - </Link>
         <span> (Page {page}) </span>
-        <Link href={`/reviews?page=${Number(page) + 1 }`}> + </Link>
+        <Link href={`/reviews?page=${Number(page) + 1}`}> + </Link>
       </div>
       <ul className="flex flex-row flex-wrap gap-3">
         {reviews.map((review) => (
@@ -31,7 +32,7 @@ export default async function ReviewsPage({ searchParams }) {
             <Link href={`reviews/${review.slug}`}>
               <img
                 alt={`${review.slug}`}
-                src={`${review.image}` }
+                src={`${review.image}`}
                 className="mb-1 rounded-t"
                 width="640"
                 height="360"
@@ -48,9 +49,9 @@ export default async function ReviewsPage({ searchParams }) {
 }
 
 function parsePageParam(paramValue) {
-  if(paramValue) {
+  if (paramValue) {
     const page = parseInt(paramValue);
-    if(isFinite(page) && page > 0) {
+    if (isFinite(page) && page > 0) {
       return page;
     }
   }
