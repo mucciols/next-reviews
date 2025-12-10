@@ -6,16 +6,6 @@ import { Combobox } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
-// const reviews = [
-//   { slug: "Hellblade", title: "Hellblade" },
-//   { slug: "hades-2018", title: "Hades" },
-//   { slug: "fall-guys", title: "Fall Guys: Ultimate Knockout" },
-//   { slug: "black-mesa", title: "Black Mesa" },
-//   { slug: "disco-elysium", title: "Disco Elysium" },
-//   { slug: "dead-cells", title: "Dead Cells" },
-//   { slug: "a-way-out-2018", title: "A Way Out" },
-// ];
-
 export default function SearchBox() {
   const router = useRouter();
   const isClient = useIsClient();
