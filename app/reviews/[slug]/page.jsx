@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import Heading from "@/components/Heading";
 import ShareButtons from "@/components/ShareButtons";
 import { getReview, getSlugs } from "@/lib/reviews";
+import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline";
+import CommentList from "@/components/CommentList";
 
 export async function generateStaticParams() {
   const slugs = await getSlugs();
@@ -23,8 +25,9 @@ export async function generateMetadata({ params }) {
 export default async function ReviewPage({ params }) {
   const { slug } = await params;
   const review = await getReview(slug);
+  console.log("[ReviewPage] review:", review);
   if (!review) {
-    console.log('non trovato')
+    console.log("non trovato");
     notFound();
   }
   //console.log('[ReviewPage] rendering: ', slug);
@@ -43,10 +46,19 @@ export default async function ReviewPage({ params }) {
         width="640"
         height="360"
       />
+
       <article
-        dangerouslySetInnerHTML={{ __html: review.body }}
+        dangerouslySetInnerHTML={{ __html: review.body.children[0].text }}
         className="max-w-screen-sm prose prose-slate"
       ></article>
+
+      <section className="border-dashed border-t max-w-screen-sm mt-3 py-3">
+        <h2 className="font-bold flex gap-2 items-center text-xl">
+          <ChatBubbleBottomCenterTextIcon className="h-6 w-6" />
+          Comments
+        </h2>
+        <CommentList />
+      </section>
     </>
   );
 }
