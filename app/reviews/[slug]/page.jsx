@@ -4,6 +4,7 @@ import ShareButtons from "@/components/ShareButtons";
 import { getReview, getSlugs } from "@/lib/reviews";
 import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline";
 import CommentList from "@/components/CommentList";
+import CommentForm from "@/components/CommentForm";
 
 export async function generateStaticParams() {
   const slugs = await getSlugs();
@@ -57,6 +58,7 @@ export default async function ReviewPage({ params }) {
           <ChatBubbleBottomCenterTextIcon className="h-6 w-6" />
           Comments
         </h2>
+        <CommentForm title={review.title} />
         <CommentList />
       </section>
     </>
