@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export default function CommentList({ slug }) {
   // questa chiamata deve essere fatta dentro a una API perché siamo 
   // in un componente client...dio boia
-  //const comments = await getComments(slug);
+  // const comments = await getComments(slug);
   const [comments, setComments] = useState([]); // stato dei commenti
 
   useEffect(() => {
