@@ -1,19 +1,34 @@
-'use client'
+"use client";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
-//import { getComments } from "@/lib/commets";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function CommentList({ slug }) {
+  // questa chiamata deve essere fatta dentro a una API perché siamo 
+  // in un componente client...dio boia
   //const comments = await getComments(slug);
+  const [comments, setComments] = useState([]); // stato dei commenti
 
-  const comments = [];
+  useEffect(() => {
+    async function fetchComments() {
+      try {
+        //questa api sta dentro al path /api/comments
+        const res = await fetch(`/api/comments/${slug}`,{
+          method: 'GET'
+        });
+        const data = await res.json();
+        setComments(data);
+      } 
+      catch (err) {
+      } 
+    }
 
-  useEffect(()=>{
-    fetch(`/api/comments/${slug}`)
-  },[slug])
+    if (slug) {
+      fetchComments();
+    }
+  }, [slug]);
 
   if (comments.length === 0) {
-    return (<p className="italic mt-3">No Comments yet</p>);
+    return <p className="italic mt-3">No Comments yet</p>;
   }
 
   return (
@@ -25,7 +40,7 @@ export default function CommentList({ slug }) {
         >
           <div className="flex gap-3 pb-1 text-slate-500">
             <UserCircleIcon className="h-6 w-6" />
-            {comment.user}
+            {comment.authorId}
           </div>
           <p className="italic">{comment.message}</p>
         </li>

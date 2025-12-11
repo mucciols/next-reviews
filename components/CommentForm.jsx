@@ -1,18 +1,10 @@
 import { createComment } from "@/lib/commets";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 export default function CommentForm({ slug, title }) {
-  // const handleSubmit = () => {
-  //   fetch(`/api/comments/${slug}` ,{
-  //     method: 'POST',
-  //     headers: { 'content-type' : 'application/json' },
-  //     body: JSON.stringify({
-  //       user: '???',
-  //       message: '???',
-  //     })
-  //   })
-  // };
 
-  async function action(formData) {
+  async function actionSubmit(formData) {
     "use server";
     
     const message = await createComment({
@@ -22,11 +14,13 @@ export default function CommentForm({ slug, title }) {
     });
    
     console.log('created:', message);
+    revalidatePath(`/reviews/${slug}`);
+    redirect(`/reviews/${slug}`)
   }
 
   return (
     <form
-      action={action}
+      action={actionSubmit}
       className="border bg-white flex flex-col gap-2 mt-3 px-3 py-2 rounded"
     >
       <p className="pb-1">
