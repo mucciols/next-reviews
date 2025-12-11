@@ -1,4 +1,7 @@
 start strapi:
   1) entra nella cartella di del cms e digita
      npm run develop
-  
+  2) generazione db con prisma 
+      genera db               : npx prisma generate
+                                npx prisma db pull
+      apertura prisma studio  : npx prisma studio

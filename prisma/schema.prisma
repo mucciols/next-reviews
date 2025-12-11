@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../lib/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model movie {
+  id           Int    @id @default(autoincrement())
+  title        String @db.VarChar(200)
+  description  String @db.LongText
+  thumbnailUrl String @db.VarChar(450)
+  videoUrl     String @db.VarChar(100)
+  duration     String @db.VarChar(20)
+  genre        String @db.VarChar(20)
+}
+
+model user {
+  id       Int       @id @default(autoincrement())
+  username String    @db.VarChar(45)
+  password String    @db.VarChar(100)
+  email    String    @unique(map: "email_UNIQUE") @db.VarChar(45)
+  comment  comment[]
+}
+
+model comment {
+  id       Int      @id @default(autoincrement())
+  slug     String   @unique(map: "slug_UNIQUE") @db.VarChar(45)
+  authorId Int
+  message  String   @db.VarChar(500)
+  postedAt DateTime @db.DateTime(0)
+  user     user     @relation(fields: [authorId], references: [id], map: "fk_post_author")
+
+  @@index([authorId], map: "fk_post_author")
+}
