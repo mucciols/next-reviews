@@ -4,23 +4,25 @@ import { redirect } from "next/navigation";
 
 export default function CommentForm({ slug, title }) {
 
-  async function actionSubmit(formData) {
+  async function action(formData) {
     "use server";
-    
+    if(!formData.get("user")) {
+      return { isError: true, message: 'Message' }
+    }
     const message = await createComment({
       slug: slug,
       user: formData.get("user"),
       message: formData.get("message"),
     });
    
-    console.log('created:', message);
+    //console.log('created:', message);
     revalidatePath(`/reviews/${slug}`);
     redirect(`/reviews/${slug}`)
   }
 
   return (
     <form
-      action={actionSubmit}
+      action={action}
       className="border bg-white flex flex-col gap-2 mt-3 px-3 py-2 rounded"
     >
       <p className="pb-1">
