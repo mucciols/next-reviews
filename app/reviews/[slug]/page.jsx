@@ -26,7 +26,7 @@ export async function generateMetadata({ params }) {
 export default async function ReviewPage({ params }) {
   const { slug } = await params;
   const review = await getReview(slug);
-  console.log("[ReviewPage] review:", review);
+  //console.log("[ReviewPage] review:", review);
   if (!review) {
     console.log("non trovato");
     notFound();
