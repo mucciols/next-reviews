@@ -18,20 +18,18 @@ model movie {
 }
 
 model user {
-  id       Int       @id @default(autoincrement())
-  username String    @db.VarChar(45)
-  password String    @db.VarChar(100)
-  email    String    @unique(map: "email_UNIQUE") @db.VarChar(45)
-  comment  comment[]
+  id       Int    @id @default(autoincrement())
+  username String @db.VarChar(45)
+  password String @db.VarChar(100)
+  email    String @unique(map: "email_UNIQUE") @db.VarChar(45)
 }
 
 model comment {
-  id       Int      @id @default(autoincrement())
-  slug     String   @unique(map: "slug_UNIQUE") @db.VarChar(45)
-  authorId Int
-  message  String   @db.VarChar(500)
-  postedAt DateTime @db.DateTime(0)
-  user     user     @relation(fields: [authorId], references: [id], map: "fk_post_author")
+  id       Int       @id @default(autoincrement())
+  slug     String?   @db.VarChar(45)
+  authorId String?   @db.VarChar(50)
+  message  String?   @db.VarChar(500)
+  postedAt DateTime? @db.DateTime(0)
 
   @@index([authorId], map: "fk_post_author")
 }

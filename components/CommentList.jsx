@@ -1,8 +1,16 @@
+'use client'
 import { UserCircleIcon } from "@heroicons/react/24/outline";
-import { getComments } from "@/lib/commets";
+//import { getComments } from "@/lib/commets";
+import { useEffect } from "react";
 
-export default async function CommentList({ slug }) {
-  const comments = await getComments(slug);
+export default function CommentList({ slug }) {
+  //const comments = await getComments(slug);
+
+  const comments = [];
+
+  useEffect(()=>{
+    fetch(`/api/comments/${slug}`)
+  },[slug])
 
   if (comments.length === 0) {
     return (<p className="italic mt-3">No Comments yet</p>);
