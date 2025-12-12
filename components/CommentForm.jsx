@@ -1,6 +1,12 @@
+'use client';
+
 import { createCommentAction } from "@/app/reviews/[slug]/actions";
+// import { createComment } from "@/lib/commets";
+// import { revalidatePath } from "next/cache";
+// import { redirect } from "next/navigation";
 
 export default function CommentForm({ slug, title }) {
+
 
   return (
     <form
@@ -12,11 +18,12 @@ export default function CommentForm({ slug, title }) {
       </p>
       <input type="hidden" name="slug" value={slug} />
       <div className="flex">
-        <label htmlFor="userField"  className="shrink-0 w-32">
+        <label htmlFor="userField" className="shrink-0 w-32">
           Your name
         </label>
         <input
-          required maxLength={50}
+          required
+          maxLength={50}
           id="userField"
           name="user"
           className="border px-2 py-1 rounded w-48"
@@ -28,7 +35,8 @@ export default function CommentForm({ slug, title }) {
           Your comment
         </label>
         <textarea
-          required maxLength={500}
+          required
+          maxLength={50}
           id="messageField"
           name="message"
           className="border px-2 py-1 rounded w-full"
