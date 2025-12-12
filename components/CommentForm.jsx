@@ -1,16 +1,27 @@
-'use client';
+"use client";
 
 import { createCommentAction } from "@/app/reviews/[slug]/actions";
-// import { createComment } from "@/lib/commets";
-// import { revalidatePath } from "next/cache";
-// import { redirect } from "next/navigation";
+import { useState } from "react";
 
 export default function CommentForm({ slug, title }) {
+  const [error, setError] = useState(null);
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setError(null);
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const result = await createCommentAction(formData);
+    if (result?.isError) {
+      setError(result);
+    } else {
+      form.reset();
+    }
+  };
 
   return (
     <form
-      action={createCommentAction}
+      onSubmit={handleSubmit}
       className="border bg-white flex flex-col gap-2 mt-3 px-3 py-2 rounded"
     >
       <p className="pb-1">
@@ -22,8 +33,6 @@ export default function CommentForm({ slug, title }) {
           Your name
         </label>
         <input
-          required
-          maxLength={50}
           id="userField"
           name="user"
           className="border px-2 py-1 rounded w-48"
@@ -42,7 +51,7 @@ export default function CommentForm({ slug, title }) {
           className="border px-2 py-1 rounded w-full"
         />
       </div>
-
+      {Boolean(error) && <p className="text-red-700">{error.message}</p>}
       <button
         type="submit"
         className="bg-orange-800 rounded px-2 py-1 self-center
