@@ -14,6 +14,7 @@ function useFormState(action, successAction) {
     const form = event.currentTarget;
     const formData = new FormData(form);
     const result = await action(formData);
+
     if (result?.isError) {
       setState({ loading: false, error: result });
     } else {
