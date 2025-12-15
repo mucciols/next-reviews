@@ -1,31 +1,46 @@
-'use client';
+"use client";
 
 import { createCommentAction } from "@/app/reviews/[slug]/actions";
 import { useState } from "react";
+import { useFormStatus } from "react-dom";
 
-export default function CommentForm({ slug, title, notifySubmitComment }) {
-  const [state, setState] = useState( { loading:false, error: null } );
+function useFormState(action, successAction) {
+
+  const [state, setState] = useState({ loading: false, error: null });
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setState({ loading: true, error: null });
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const result = await createCommentAction(formData);
+    const result = await action(formData);
     if (result?.isError) {
-      setState({ loading:false, error: result });
+      setState({ loading: false, error: result });
     } else {
       form.reset();
-      setState({ loading:false, error: null });
-      notifySubmitComment();
+      setState({ loading: false, error: null });
+
+      if(successAction)
+        successAction();
     }
   };
+
+  return [state, handleSubmit];
+}
+
+export default function CommentForm({ slug, title, notifySubmitComment }) {
+  
+  const [state, handleSubmit] = useFormState(createCommentAction, notifySubmitComment)
+
+  console.log('state:', state)
 
   return (
     <form
       onSubmit={handleSubmit}
       className="border bg-white flex flex-col gap-2 mt-3 px-3 py-2 rounded"
     >
+      <p>messaggio: {state.message}</p>
+      <p>errore: {state.isError}</p>
       <p className="pb-1">
         Already played <strong>{title}</strong>? Have your say!
       </p>
@@ -53,14 +68,22 @@ export default function CommentForm({ slug, title, notifySubmitComment }) {
           className="border px-2 py-1 rounded w-full"
         />
       </div>
-      {Boolean(state.error) && <p className="text-red-700">{state.error.message}</p>}
-      <button disabled={state.loading}
-        type="submit"
-        className="bg-orange-800 rounded px-2 py-1 self-center
-        text-slate-50 w-32 hover:bg-orange-700 disabled:bg-slate-500 disabled:cursor-not-allowed"
-      >
-        Submit
-      </button>
+      {Boolean(state.isError) && <p className="text-red-700">{state.message}</p>}
+      <SubmitButton />
     </form>
+  );
+}
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+  return (
+    <button
+      disabled={pending}
+      type="submit"
+      className="bg-orange-800 rounded px-2 py-1 self-center
+        text-slate-50 w-32 hover:bg-orange-700 disabled:bg-slate-500 disabled:cursor-not-allowed"
+    >
+      Submit
+    </button>
   );
 }
