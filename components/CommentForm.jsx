@@ -14,13 +14,11 @@ function useFormState(action, successAction) {
     const form = event.currentTarget;
     const formData = new FormData(form);
     const result = await action(formData);
-
     if (result?.isError) {
-      setState({ loading: false, error: result });
+      setState({ loading: false, error: result.message });
     } else {
       form.reset();
       setState({ loading: false, error: null });
-
       if(successAction)
         successAction();
     }
@@ -32,8 +30,6 @@ function useFormState(action, successAction) {
 export default function CommentForm({ slug, title, notifySubmitComment }) {
   
   const [state, handleSubmit] = useFormState(createCommentAction, notifySubmitComment)
-
-  console.log('state:', state)
 
   return (
     <form
@@ -69,7 +65,10 @@ export default function CommentForm({ slug, title, notifySubmitComment }) {
           className="border px-2 py-1 rounded w-full"
         />
       </div>
-      {Boolean(state.isError) && <p className="text-red-700">{state.message}</p>}
+    
+      <p className="text-red-700">{state.message}</p>
+      
+      {Boolean(state.error) && <p className="text-red-700">{state.error}</p>}
       <SubmitButton />
     </form>
   );
