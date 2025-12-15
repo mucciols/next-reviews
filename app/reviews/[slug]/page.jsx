@@ -5,6 +5,7 @@ import { getReview, getSlugs } from "@/lib/reviews";
 import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline";
 import CommentList from "@/components/CommentList";
 import CommentForm from "@/components/CommentForm";
+import { revalidatePath } from "next/cache";
 
 export async function generateStaticParams() {
   const slugs = await getSlugs();
@@ -26,12 +27,19 @@ export async function generateMetadata({ params }) {
 export default async function ReviewPage({ params }) {
   const { slug } = await params;
   const review = await getReview(slug);
-  //console.log("[ReviewPage] review:", review);
+
   if (!review) {
     console.log("non trovato");
     notFound();
   }
-  //console.log('[ReviewPage] rendering: ', slug);
+
+  const notificaCommentoInserito = async (formData) => { // Ricevi il formData dal <form action={...}>
+    "use server"; // Server Action
+
+    // 3. Revalida il percorso per forzare il re-fetch dei dati (inclusa la CommentList)
+    revalidatePath(`/reviews/${slug}`); 
+  };
+
   return (
     <>
       <Heading>{review.title}</Heading>
@@ -58,7 +66,7 @@ export default async function ReviewPage({ params }) {
           <ChatBubbleBottomCenterTextIcon className="h-6 w-6" />
           Comments
         </h2>
-        <CommentForm slug={review.slug} title={review.title} />
+        <CommentForm slug={review.slug} notifySubmitComment={notificaCommentoInserito} title={review.title} />
         <CommentList slug={review.slug} />
       </section>
     </>

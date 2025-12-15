@@ -1,30 +1,36 @@
-'use client';
+//'use client';
 
+import { getComments } from "@/lib/commets";
 import { UserCircleIcon } from "@heroicons/react/24/outline";
-import { useEffect, useState } from "react";
+//import { useEffect, useState } from "react";
 
-export default function CommentList({ slug }) {
+export default async function CommentList({ slug }) {
   // questa chiamata deve essere fatta dentro a una API perché siamo
   // in un componente client...dio boia
   // const comments = await getComments(slug);
-  const [comments, setComments] = useState([]); // stato dei commenti
+  //const [comments, setComments] = useState([]); // stato dei commenti
 
-  async function fetchComments() {
-    try {
-      //questa api sta dentro al path /api/comments
-      const res = await fetch(`/api/comments/${slug}`, {
-        method: "GET",
-      });
-      const data = await res.json();
-      setComments(data);
-    } catch (err) {}
-  }
 
-  useEffect(() => {
-    if (slug) {
-      fetchComments();
-    }
-  }, [slug]);
+  const comments = await getComments(slug);
+
+  // async function fetchComments() {
+  //   try {
+  //     //questa api sta dentro al path /api/comments
+  //     const res = await fetch(`/api/comments/${slug}`, {
+  //       method: "GET",
+  //     });
+  //     const data = await res.json();
+  //     setComments(data);
+  //   } catch (err) {}
+  // }
+
+  //console.log('slug: ', slug)
+
+  // useEffect(() => {
+  //   if (slug) {
+  //     fetchComments();
+  //   }
+  // }, [slug]);
 
   if (comments.length === 0) {
     return <p className="italic mt-3">No Comments yet</p>;
