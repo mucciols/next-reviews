@@ -28,14 +28,16 @@ export async function generateMetadata({ params }) {
 
 export default async function ReviewPage({ params }) {
   const { slug } = await params;
+  //simulate delay
+  // await new Promise((resolve)=> setTimeout(resolve, 2500));
   const review = await getReview(slug);
-
   if (!review) {
     console.log("non trovato");
     notFound();
   }
 
-  const notificaCommentoInserito = async (formData) => { // Ricevi il formData dal <form action={...}>
+  // Ricevi il formData dal <form action={...}>
+  const notificaCommentoInserito = async (formData) => { 
     "use server"; // Server Action
 
     // 3. Revalida il percorso per forzare il re-fetch dei dati (inclusa la CommentList)

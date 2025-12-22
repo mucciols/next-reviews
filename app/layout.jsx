@@ -10,7 +10,6 @@ export const metadata = {
   description : "only the best indie games, reviewed for you"
 }
 
-
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${orbitron.variable} ${exo2.variable}`}>
@@ -19,7 +18,7 @@ export default function RootLayout({ children }) {
           <NavBar />
         </header>
         <main className='grow py-3'> 
-          {children}
+            {children}
         </main>
         <footer className='border-t py-3 text-center test-slate-500 text-xs'>
           Game data and images courtesy 
