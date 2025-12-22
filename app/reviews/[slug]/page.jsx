@@ -6,6 +6,7 @@ import { ChatBubbleBottomCenterTextIcon } from "@heroicons/react/24/outline";
 import CommentList from "@/components/CommentList";
 import CommentForm from "@/components/CommentForm";
 import { revalidatePath } from "next/cache";
+import { Suspense } from "react";
 
 export async function generateStaticParams() {
   const slugs = await getSlugs();
@@ -67,7 +68,9 @@ export default async function ReviewPage({ params }) {
           Comments
         </h2>
         <CommentForm slug={review.slug} notifySubmitComment={notificaCommentoInserito} title={review.title} />
-        <CommentList slug={review.slug} />
+        <Suspense fallback={ <p>Loading...</p> }>
+          <CommentList slug={review.slug} />
+        </Suspense>        
       </section>
     </>
   );
