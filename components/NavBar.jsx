@@ -16,11 +16,14 @@ export default function NavBar() {
         </li>
         <li>
           {/* <Link className='font-orbitron text-orange-800 hover:underline' href="/about" prefetch={false}>About</Link> */}
-
           <NavLink href="/about">
             About
           </NavLink>
-
+        </li>
+        <li>
+          <NavLink href="/sign-in">
+            Sign in
+          </NavLink>
         </li>
       </ul>
     </nav>
