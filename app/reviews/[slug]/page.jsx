@@ -7,6 +7,7 @@ import CommentList from "@/components/CommentList";
 import CommentForm from "@/components/CommentForm";
 import { revalidatePath } from "next/cache";
 import { Suspense } from "react";
+import CommentListSkeleton from "@/components/CommentListSkeleton";
 
 export async function generateStaticParams() {
   const slugs = await getSlugs();
@@ -68,7 +69,7 @@ export default async function ReviewPage({ params }) {
           Comments
         </h2>
         <CommentForm slug={review.slug} notifySubmitComment={notificaCommentoInserito} title={review.title} />
-        <Suspense fallback={ <p>Loading...</p> }>
+        <Suspense fallback={ <CommentListSkeleton /> }>
           <CommentList slug={review.slug} />
         </Suspense>        
       </section>
