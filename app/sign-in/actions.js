@@ -1,7 +1,10 @@
 'use server';
 
+import { SignJWT } from "jose";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+
+const JWT_SECRET =  new TextEncoder().encode('some-random-string');
 
 export async function signInAction(formData) {
   
@@ -15,13 +18,15 @@ export async function signInAction(formData) {
   if(!user) {
     return { isError: true, message: "Invalid credentials" };
   }
-  (await cookies()).set('user', JSON.stringify(user))
+  const sessionToken = await new SignJWT(user)
+    .setProtectedHeader({ alg: 'HS256' })
+    .sign(JWT_SECRET);
+  (await cookies()).set('sessionToken', sessionToken)
   redirect('/');
-  
 }
 
 function authenticate(email, password) {
-  if(email.endsWith('@example.com') && password === "text") {
+  if(email.endsWith('@example.com') && password === "test") {
     return { email }
   }
 }
