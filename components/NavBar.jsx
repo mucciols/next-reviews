@@ -1,5 +1,6 @@
 import { getUserFromSession } from "@/lib/auth";
 import NavLink from "./NavLink";
+import SignOutButton from "./SignOutButton";
 
 export default async function NavBar() {
   const user = await getUserFromSession();
@@ -19,7 +20,10 @@ export default async function NavBar() {
           <NavLink href="/about">About</NavLink>
         </li>
         {user ? (
-          <li>{user.email}</li>
+          // <li>{user.email}</li>
+          <li>
+            <SignOutButton />
+          </li>
         ) : (
           <li>
             <NavLink href="/sign-in">Sign in</NavLink>
