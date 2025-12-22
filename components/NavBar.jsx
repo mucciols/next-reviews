@@ -1,6 +1,11 @@
+import { cookies } from 'next/headers';
 import NavLink from './NavLink';
 
-export default function NavBar() {
+export default async function NavBar() {
+
+  const userCookie = (await cookies()).get('user');
+  const user = userCookie ? JSON.parse(userCookie.value) : null;
+
   return (
     <nav>
       <ul className="flex gap-2">
@@ -20,11 +25,16 @@ export default function NavBar() {
             About
           </NavLink>
         </li>
-        <li>
-          <NavLink href="/sign-in">
-            Sign in
-          </NavLink>
-        </li>
+        {
+          user ? (
+            <li>{user.email}</li>
+          ) : (
+          <li>
+            <NavLink href="/sign-in">
+              Sign in
+            </NavLink>
+          </li>)
+        }
       </ul>
     </nav>
   );
