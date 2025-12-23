@@ -1,16 +1,19 @@
-"use server";
+'use server';
 
+import { getUserFromSession } from "@/lib/auth";
 import { createComment } from "@/lib/commets";
 
 export async function createCommentAction(formData) {
-  
-  if (!formData.get("user")) {
-    return { isError: true, message: "Name field is required" };
+  const user = await getUserFromSession()
+  if (!user) {
+    return { isError: true, message: "Unauthorized" };
   }
+
+  //console.log('[createCommentAction] user:', user);
 
   const data = {
     slug: formData.get("slug"),
-    user: formData.get("user"),
+    user: user.username,
     message: formData.get("message"),
   };
   const message = await createComment(data);

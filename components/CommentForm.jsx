@@ -19,7 +19,7 @@ export default function CommentForm({ slug, title, notifySubmitComment }) {
         Already played <strong>{title}</strong>? Have your say!
       </p>
       <input type="hidden" name="slug" value={slug} />
-      <div className="flex">
+      {/* <div className="flex">
         <label htmlFor="userField" className="shrink-0 w-32">
           Your name
         </label>
@@ -28,7 +28,7 @@ export default function CommentForm({ slug, title, notifySubmitComment }) {
           name="user"
           className="border px-2 py-1 rounded w-48"
         />
-      </div>
+      </div> */}
 
       <div className="flex">
         <label htmlFor="messageField" className="shrink-0 w-32">

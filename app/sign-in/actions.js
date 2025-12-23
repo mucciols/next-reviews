@@ -1,6 +1,7 @@
 'use server';
 
 import { setSessionCookie } from "@/lib/auth";
+import { authenticateUser } from "@/lib/users";
 import { redirect } from "next/navigation";
 
 export async function signInAction(formData) {
@@ -11,7 +12,7 @@ export async function signInAction(formData) {
   if (!formData.get("password")) {
     return { isError: true, message: "Password field is required" };
   }
-  const user = authenticate(formData.get("email"),formData.get("password") );
+  const user = await authenticateUser(formData.get("email"),formData.get("password") );
   if(!user) {
     return { isError: true, message: "Invalid credentials" };
   }
@@ -19,8 +20,8 @@ export async function signInAction(formData) {
   redirect('/');
 }
 
-function authenticate(email, password) {
-  if(email.endsWith('@example.com') && password === "test") {
-    return { email }
-  }
-}
+// function authenticate(email, password) {
+//   if(email.endsWith('@example.com') && password === "test") {
+//     return { email }
+//   }
+// }

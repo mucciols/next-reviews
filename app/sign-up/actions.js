@@ -1,5 +1,6 @@
 'use server';
 
+import { setSessionCookie } from "@/lib/auth";
 import { createUser, emailExists, usernameExists } from "@/lib/users";
 import { redirect } from "next/navigation";
 
@@ -38,10 +39,6 @@ export async function signUpAction(formData) {
 
   const user = await createUser(username, password, email);
 
-
-  // if(!user) {
-  //   return { isError: true, message: "Invalid credentials" };
-  // }
-  // await setSessionCookie(user);
-  // redirect('/');
+  await setSessionCookie(user);
+  redirect('/');
 }

@@ -8,6 +8,7 @@ import CommentForm from "@/components/CommentForm";
 import { revalidatePath } from "next/cache";
 import { Suspense } from "react";
 import CommentListSkeleton from "@/components/CommentListSkeleton";
+import { getUserFromSession } from "@/lib/auth";
 
 export async function generateStaticParams() {
   const slugs = await getSlugs();
@@ -35,6 +36,8 @@ export default async function ReviewPage({ params }) {
     console.log("non trovato");
     notFound();
   }
+
+  const user = await getUserFromSession();
 
   // Ricevi il formData dal <form action={...}>
   const notificaCommentoInserito = async (formData) => { 
@@ -70,10 +73,15 @@ export default async function ReviewPage({ params }) {
           <ChatBubbleBottomCenterTextIcon className="h-6 w-6" />
           Comments
         </h2>
-        <CommentForm slug={review.slug} notifySubmitComment={notificaCommentoInserito} title={review.title} />
+        {
+          user && (
+            <CommentForm slug={review.slug} notifySubmitComment={notificaCommentoInserito} title={review.title} />       
+          )
+        }
         <Suspense fallback={ <CommentListSkeleton /> }>
           <CommentList slug={review.slug} />
-        </Suspense>        
+        </Suspense>     
+        
       </section>
     </>
   );
